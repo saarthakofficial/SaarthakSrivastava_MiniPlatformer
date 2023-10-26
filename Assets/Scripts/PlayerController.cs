@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 
@@ -9,12 +7,12 @@ public class PlayerController : MonoBehaviour
 {
     Rigidbody2D _rb;
     CapsuleCollider2D _col;
-    public bool _grounded;
-    public bool _jumping;
-    public int _jumpsRemaining;
-    public bool _dashing;
-    public float _dashCooldownTimer;
-    public float _direction;
+    bool _grounded;
+    bool _jumping;
+    int _jumpsRemaining;
+    bool _dashing;
+    float _dashCooldownTimer;
+    float _direction;
 
     [SerializeField] ScriptableStats _stats;
 
@@ -78,15 +76,12 @@ public class PlayerController : MonoBehaviour
         _rb.velocity = velocity;
     }
     void HandleJump(){
-        if (Input.GetAxis("Jump") > 0)
-        {
-            if (_grounded)
-            {
+        if (Input.GetAxis("Jump") > 0){
+            if (_grounded){
                 _jumping = true;
                 _rb.AddForce(Vector2.up * _stats.JumpPower, ForceMode2D.Impulse);
             }
-            else if (_jumpsRemaining > 0)
-            {
+            else if (_jumpsRemaining > 0){
                 _jumping = true;
                 _jumpsRemaining--;
                 _rb.velocity = new Vector2(_rb.velocity.x, 0);
@@ -95,11 +90,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void HandleDash()
-    {
+    void HandleDash(){
         _dashCooldownTimer -= Time.deltaTime;
-        if (Input.GetAxis("Fire3") > 0 && !_dashing && _dashCooldownTimer<0)
-        {
+        if (Input.GetAxis("Fire3") > 0 && !_dashing && _dashCooldownTimer<0){
             _dashing = true;
             _dashCooldownTimer = _stats.DashCooldown;
             StartCoroutine("Dash");
@@ -110,8 +103,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Dashing!");
         Vector2 targetVelocity = _direction * Vector2.right *_stats.DashSpeed;
         float elapsedTime = 0;
-        while (elapsedTime < _stats.DashDuration)
-        {
+        while (elapsedTime < _stats.DashDuration){
             float t = elapsedTime / _stats.DashDuration;
             _rb.velocity = Vector2.Lerp(_rb.velocity, targetVelocity, t);
             elapsedTime += Time.fixedDeltaTime;
@@ -121,6 +113,8 @@ public class PlayerController : MonoBehaviour
         _dashing = false;
     }
     void OnValidate(){
-        if (_stats == null) Debug.LogWarning("Please assign a ScriptableStats asset to the Player Controller's Stats slot", this);
+        if (_stats == null){
+            Debug.LogWarning("Please assign a ScriptableStats asset to the Player Controller's Stats slot", this);
+        }
     }
 }
