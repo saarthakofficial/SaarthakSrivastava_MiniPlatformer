@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
 public class PlayerController : MonoBehaviour
 {
+    PlayerAnimator playerAnimator;
     Rigidbody2D _rb;
     CapsuleCollider2D _col;
     bool _grounded;
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
     void Awake(){
         _rb = GetComponent<Rigidbody2D>();
         _col = GetComponent<CapsuleCollider2D>();
+        playerAnimator = GetComponentInChildren<PlayerAnimator>();
     }
 
     void FixedUpdate(){
@@ -30,11 +32,14 @@ public class PlayerController : MonoBehaviour
 
     void CheckGrounded(){
         _grounded = Physics2D.Raycast(_col.bounds.center, Vector2.down, _stats.GrounderDistance, ~_stats.PlayerLayer);
-
         if (_grounded){
+            if (_jumping){
+                playerAnimator.Land();
+            }
             _jumpsRemaining = _stats.MaxJumps;
             _jumping = false;
             _dashing = false;
+            
         }
     }
 
@@ -74,6 +79,7 @@ public class PlayerController : MonoBehaviour
                 _jumping = true;
                 _jumpCooldownTimer = _stats.JumpCooldown;
                 _rb.AddForce(Vector2.up * _stats.JumpPower, ForceMode2D.Impulse);
+                playerAnimator.Jump();
             }
             else if (_jumpsRemaining > 0 && _jumpCooldownTimer < 0){
                 _jumping = true;
@@ -81,6 +87,7 @@ public class PlayerController : MonoBehaviour
                 _jumpCooldownTimer = _stats.JumpCooldown;
                 _rb.velocity = new Vector2(_rb.velocity.x, 0);
                 _rb.AddForce(Vector2.up * _stats.JumpPower * 2, ForceMode2D.Impulse);
+                playerAnimator.Jump();
             }
         }
     }
