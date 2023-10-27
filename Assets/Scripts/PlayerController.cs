@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
@@ -7,27 +8,31 @@ public class PlayerController : MonoBehaviour
 {
     PlayerAnimator playerAnimator;
     Rigidbody2D _rb;
-    CapsuleCollider2D _col;
+    BoxCollider2D _col;
     bool _grounded;
     bool _jumping;
     public int _jumpsRemaining;
     float _jumpCooldownTimer;
     bool _dashing;
     float _dashCooldownTimer;
+    public float rotationSpeed = 0.5f;
 
     [SerializeField] ScriptableStats _stats;
 
     void Awake(){
         _rb = GetComponent<Rigidbody2D>();
-        _col = GetComponent<CapsuleCollider2D>();
+        _col = GetComponent<BoxCollider2D>();
         playerAnimator = GetComponentInChildren<PlayerAnimator>();
     }
 
     void FixedUpdate(){
-        CheckGrounded();
-        HandleMovement();
-        HandleJump();
-        HandleDash();
+        if (GameManager.instance.currentState != State.Ending){
+            CheckGrounded();
+            HandleMovement();
+            HandleJump();
+            HandleDash();
+        }
+
     }
 
     void CheckGrounded(){
@@ -36,6 +41,7 @@ public class PlayerController : MonoBehaviour
             if (_jumping){
                 playerAnimator.Land();
             }
+            _jumpCooldownTimer = _stats.JumpCooldown;
             _jumpsRemaining = _stats.MaxJumps;
             _jumping = false;
             _dashing = false;
@@ -44,6 +50,7 @@ public class PlayerController : MonoBehaviour
     }
 
     void HandleMovement(){
+
         float moveInput = Input.GetAxis("Horizontal");
         Vector2 velocity = _rb.velocity;
 
@@ -117,6 +124,14 @@ public class PlayerController : MonoBehaviour
     void OnValidate(){
         if (_stats == null){
             Debug.LogWarning("Please assign a ScriptableStats asset to the Player Controller's Stats slot", this);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other){
+        if (other.gameObject.tag == "Start"){
+            other.GetComponent<Animation>().Play();
+            other.GetComponent<BoxCollider2D>().enabled = false;
+            GameManager.instance.currentState = State.Playing;
         }
     }
 }
