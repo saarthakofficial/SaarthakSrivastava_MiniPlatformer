@@ -21,9 +21,10 @@ MonoBehaviour:
   AirDeceleration: 30
   GroundingForce: 0
   GrounderDistance: 0.75
-  JumpPower: 20
-  MaxJumps: 3
+  JumpPower: 15
+  MaxJumps: 1
+  JumpCooldown: 0.3
   MaxFallSpeed: 40
-  DashCooldown: 0
-  DashSpeed: 50
-  DashDuration: 0.1
+  DashCooldown: 3
+  DashSpeed: 750
+  DashDuration: 0.05

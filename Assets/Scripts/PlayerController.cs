@@ -9,10 +9,10 @@ public class PlayerController : MonoBehaviour
     CapsuleCollider2D _col;
     bool _grounded;
     bool _jumping;
-    int _jumpsRemaining;
+    public int _jumpsRemaining;
+    float _jumpCooldownTimer;
     bool _dashing;
     float _dashCooldownTimer;
-    float _direction;
 
     [SerializeField] ScriptableStats _stats;
 
@@ -57,14 +57,6 @@ public class PlayerController : MonoBehaviour
             velocity.x = Mathf.MoveTowards(velocity.x, 0, deceleration * Time.fixedDeltaTime);
         }
 
-        if (moveInput > 0){
-            _direction = 1;
-        }
-        else if (moveInput < 0){
-
-            _direction = -1;
-        }
-
         if (velocity.y < -_stats.MaxFallSpeed){
             velocity.y = -_stats.MaxFallSpeed;
         }
@@ -76,23 +68,26 @@ public class PlayerController : MonoBehaviour
         _rb.velocity = velocity;
     }
     void HandleJump(){
+        _jumpCooldownTimer -= Time.deltaTime;
         if (Input.GetAxis("Jump") > 0){
             if (_grounded){
                 _jumping = true;
+                _jumpCooldownTimer = _stats.JumpCooldown;
                 _rb.AddForce(Vector2.up * _stats.JumpPower, ForceMode2D.Impulse);
             }
-            else if (_jumpsRemaining > 0){
+            else if (_jumpsRemaining > 0 && _jumpCooldownTimer < 0){
                 _jumping = true;
                 _jumpsRemaining--;
+                _jumpCooldownTimer = _stats.JumpCooldown;
                 _rb.velocity = new Vector2(_rb.velocity.x, 0);
-                _rb.AddForce(Vector2.up * _stats.JumpPower, ForceMode2D.Impulse);
+                _rb.AddForce(Vector2.up * _stats.JumpPower * 2, ForceMode2D.Impulse);
             }
         }
     }
 
     void HandleDash(){
         _dashCooldownTimer -= Time.deltaTime;
-        if (Input.GetAxis("Fire3") > 0 && !_dashing && _dashCooldownTimer<0){
+        if (Input.GetAxis("Fire3") > 0 && !_dashing && _dashCooldownTimer<0 && (Input.GetAxis("Horizontal") > 0 || Input.GetAxis("Vertical") > 0)){
             _dashing = true;
             _dashCooldownTimer = _stats.DashCooldown;
             StartCoroutine("Dash");
@@ -101,11 +96,11 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator Dash(){
         Debug.Log("Dashing!");
-        Vector2 targetVelocity = _direction * Vector2.right *_stats.DashSpeed;
+        Vector2 dashDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
+        Vector2 targetVelocity = dashDirection *_stats.DashSpeed;
         float elapsedTime = 0;
         while (elapsedTime < _stats.DashDuration){
-            float t = elapsedTime / _stats.DashDuration;
-            _rb.velocity = Vector2.Lerp(_rb.velocity, targetVelocity, t);
+            _rb.velocity = Vector2.Lerp(_rb.velocity, targetVelocity, elapsedTime);
             elapsedTime += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }

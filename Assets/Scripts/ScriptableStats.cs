@@ -21,6 +21,7 @@ public class ScriptableStats : ScriptableObject
 
     public float JumpPower = 36;
     public int MaxJumps = 2;
+    public float JumpCooldown = 0.5f;
     public float MaxFallSpeed = 40;
     [Range(0f, 5f)]
     public float DashCooldown = 3f;
