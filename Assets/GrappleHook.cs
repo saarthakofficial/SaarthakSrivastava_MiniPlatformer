@@ -9,10 +9,12 @@ public class GrappleHook : MonoBehaviour {
     [SerializeField] float grappleSpeed = 10f;
     [SerializeField] float grappleShootSpeed = 20f;
 
+    [SerializeField] Vector3 offset;
     bool isGrappling = false;
     [HideInInspector] public bool retracting = false;
 
     Vector2 target;
+
 
     private void Start() {
         line = GetComponent<LineRenderer>();
@@ -28,7 +30,7 @@ public class GrappleHook : MonoBehaviour {
 
             transform.position = grapplePos;
 
-            line.SetPosition(0, transform.position);
+            line.SetPosition(0, transform.position + offset);
 
             if (Vector2.Distance(transform.position, target) < 0.5f) {
                 retracting = false;
@@ -39,9 +41,9 @@ public class GrappleHook : MonoBehaviour {
     }
 
     private void StartGrapple() {
-        Vector2 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+        Vector2 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - (transform.position + offset);
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, maxDistance, grapplableMask);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + offset, direction, maxDistance, grapplableMask);
 
         if (hit.collider != null) {
             isGrappling = true;
@@ -57,14 +59,14 @@ public class GrappleHook : MonoBehaviour {
         float t = 0;
         float time = 10;
 
-        line.SetPosition(0, transform.position);
+        line.SetPosition(0, transform.position + offset);
         line.SetPosition(1, transform.position); 
 
         Vector2 newPos;
 
         for (; t < time; t += grappleShootSpeed * Time.deltaTime) {
             newPos = Vector2.Lerp(transform.position, target, t / time);
-            line.SetPosition(0, transform.position);
+            line.SetPosition(0, transform.position + offset);
             line.SetPosition(1, newPos);
             yield return null;
         }

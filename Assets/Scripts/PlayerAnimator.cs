@@ -5,6 +5,13 @@ using UnityEngine;
 public class PlayerAnimator : MonoBehaviour
 {
     public Animator anim;
+    public ParticleSystem moveVfx;
+    public ParticleSystem jumpVfx;
+    public ParticleSystem dJumpVfx;
+    public ParticleSystem landVfx;
+    public ParticleSystem dashVfx;
+    
+    public GameObject boomVFX;
     PlayerController player;
     
     void Awake(){

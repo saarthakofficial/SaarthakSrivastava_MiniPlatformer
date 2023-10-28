@@ -18,7 +18,7 @@ public class Lava : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.instance.currentState == State.Playing){
+        if (GameManager.instance.currentState == State.PlayArea){
             transform.position += new Vector3(0f, moveSpeed * Time.deltaTime, 0f);
         }
         Vector3[] vertices = mesh.vertices;
@@ -29,9 +29,5 @@ public class Lava : MonoBehaviour
         mesh.vertices = vertices;
     }
 
-    private void OnTriggerEnter(Collider other) {
-        if (other.gameObject.tag == "Player"){
-            GameManager.instance.currentState = State.Ending;
-        }
-    }
+    
 }

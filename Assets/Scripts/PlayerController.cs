@@ -26,26 +26,32 @@ public class PlayerController : MonoBehaviour
     }
 
     void FixedUpdate(){
-        if (GameManager.instance.currentState != State.Ending){
             CheckGrounded();
             HandleMovement();
-            HandleJump();
+            if (GameManager.instance.currentState != State.DashArea){
+                HandleJump();
+            }
             HandleDash();
-        }
 
     }
 
     void CheckGrounded(){
         _grounded = Physics2D.Raycast(_col.bounds.center, Vector2.down, _stats.GrounderDistance, ~_stats.PlayerLayer);
         if (_grounded){
-            if (_jumping){
+            if (_jumping)
+            {
+                playerAnimator.landVfx.Play();
                 playerAnimator.Land();
             }
+            playerAnimator.moveVfx.Play();
             _jumpCooldownTimer = _stats.JumpCooldown;
             _jumpsRemaining = _stats.MaxJumps;
             _jumping = false;
             _dashing = false;
-            
+        }
+        else{
+            _jumping = true;
+            playerAnimator.moveVfx.Stop();
         }
     }
 
@@ -72,10 +78,12 @@ public class PlayerController : MonoBehaviour
         if (velocity.y < -_stats.MaxFallSpeed){
             velocity.y = -_stats.MaxFallSpeed;
         }
-
-        if (_grounded && Input.GetAxis("Jump") > 0){
-            velocity.y = _stats.JumpPower;
-        }
+        //     if (GameManager.instance.currentState != State.DashArea){
+        //     if (_grounded && Input.GetAxis("Jump") > 0){
+        //     velocity.y = _stats.JumpPower;
+        // }
+        //     }
+        
 
         _rb.velocity = velocity;
     }
@@ -83,9 +91,11 @@ public class PlayerController : MonoBehaviour
         _jumpCooldownTimer -= Time.deltaTime;
         if (Input.GetAxis("Jump") > 0){
             if (_grounded){
+                _rb.velocity = new Vector2(_rb.velocity.x, _stats.JumpPower);
                 _jumping = true;
                 _jumpCooldownTimer = _stats.JumpCooldown;
                 _rb.AddForce(Vector2.up * _stats.JumpPower, ForceMode2D.Impulse);
+                playerAnimator.jumpVfx.Play();
                 playerAnimator.Jump();
             }
             else if (_jumpsRemaining > 0 && _jumpCooldownTimer < 0){
@@ -94,6 +104,7 @@ public class PlayerController : MonoBehaviour
                 _jumpCooldownTimer = _stats.JumpCooldown;
                 _rb.velocity = new Vector2(_rb.velocity.x, 0);
                 _rb.AddForce(Vector2.up * _stats.JumpPower * 2, ForceMode2D.Impulse);
+                playerAnimator.dJumpVfx.Play();
                 playerAnimator.Jump();
             }
         }
@@ -104,12 +115,12 @@ public class PlayerController : MonoBehaviour
         if (Input.GetAxis("Fire3") > 0 && !_dashing && _dashCooldownTimer<0 && (Input.GetAxis("Horizontal") > 0 || Input.GetAxis("Vertical") > 0)){
             _dashing = true;
             _dashCooldownTimer = _stats.DashCooldown;
+            playerAnimator.dashVfx.Play();
             StartCoroutine("Dash");
         }
     }
 
     IEnumerator Dash(){
-        Debug.Log("Dashing!");
         Vector2 dashDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
         Vector2 targetVelocity = dashDirection *_stats.DashSpeed;
         float elapsedTime = 0;
@@ -131,7 +142,23 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag == "Start"){
             other.GetComponent<Animation>().Play();
             other.GetComponent<BoxCollider2D>().enabled = false;
-            GameManager.instance.currentState = State.Playing;
+            GameManager.instance.currentState = State.PlayArea;
+            Destroy(other.gameObject, 1f);  
+        }
+        if (other.gameObject.tag == "WaitArea"){
+            GameManager.instance.currentState = State.WaitArea;
+        }
+        else if (other.gameObject.tag == "DashArea"){
+            GameManager.instance.currentState = State.DashArea;
+        }
+        else if (other.gameObject.tag == "PlayArea"){
+            GameManager.instance.currentState = State.PlayArea;
+        }
+        else if (other.gameObject.tag == "Lava"){
+            GameManager.instance.currentState = State.Ending;
+            Instantiate(playerAnimator.boomVFX, transform.position, Quaternion.identity);
+            GameManager.instance.GameOver();
         }
     }
+
 }
