@@ -1,12 +1,14 @@
+using TreeEditor;
 using UnityEngine;
 
 public class Lava : MonoBehaviour
 {
+    Transform playerTransform;
     public float waveSpeed = 1.0f;
     public float waveHeight = 0.1f;
     
-    private Vector3[] originalVertices;
-    private Mesh mesh;
+    Vector3[] originalVertices;
+    Mesh mesh;
 
     [SerializeField] float moveSpeed;
 
@@ -14,11 +16,15 @@ public class Lava : MonoBehaviour
     {
         mesh = GetComponent<MeshFilter>().mesh;
         originalVertices = mesh.vertices;
+        playerTransform = GameManager.instance.playerObj.transform;
     }
 
     void Update()
     {
         if (GameManager.instance.currentState == State.PlayArea){
+            if (playerTransform.position.y - transform.position.y > 30f){
+                transform.position = new Vector3(transform.position.x, playerTransform.position.y - 30f, transform.position.z);
+            }
             transform.position += new Vector3(0f, moveSpeed * Time.deltaTime, 0f);
         }
         Vector3[] vertices = mesh.vertices;

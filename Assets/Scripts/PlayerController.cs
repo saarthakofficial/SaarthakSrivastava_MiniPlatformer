@@ -9,8 +9,8 @@ public class PlayerController : MonoBehaviour
     PlayerAnimator playerAnimator;
     Rigidbody2D _rb;
     BoxCollider2D _col;
-    bool _grounded;
-    bool _jumping;
+    public bool _grounded;
+    public bool _jumping;
     public int _jumpsRemaining;
     float _jumpCooldownTimer;
     bool _dashing;
@@ -139,12 +139,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other){
-        if (other.gameObject.tag == "Start"){
-            other.GetComponent<Animation>().Play();
-            other.GetComponent<BoxCollider2D>().enabled = false;
-            GameManager.instance.currentState = State.PlayArea;
-            Destroy(other.gameObject, 1f);  
-        }
+        
         if (other.gameObject.tag == "WaitArea"){
             GameManager.instance.currentState = State.WaitArea;
         }

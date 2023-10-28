@@ -20,8 +20,8 @@ public class RotatingSquares : MonoBehaviour
     private void OnCollisionStay2D(Collision2D other) {
         if (other.gameObject.tag == "Player"){
             other.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
-            other.gameObject.GetComponent<PlayerAnimator>().landVfx.gameObject.SetActive(false);
-            other.gameObject.GetComponent<PlayerAnimator>().jumpVfx.gameObject.SetActive(false);
+            other.gameObject.GetComponentInChildren<PlayerAnimator>().landVfx.gameObject.SetActive(false);
+            other.gameObject.GetComponentInChildren<PlayerAnimator>().jumpVfx.gameObject.SetActive(false);
         }
     }
 

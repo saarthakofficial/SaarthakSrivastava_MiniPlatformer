@@ -21,7 +21,7 @@ public class GrappleHook : MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetMouseButtonDown(0) && !isGrappling) {
+        if (Input.GetMouseButtonDown(0) && !isGrappling && GetComponent<PlayerController>()._jumping) {
             StartGrapple();
         }
 
@@ -64,11 +64,12 @@ public class GrappleHook : MonoBehaviour {
 
         Vector2 newPos;
 
-        for (; t < time; t += grappleShootSpeed * Time.deltaTime) {
+        while (t < time) {
             newPos = Vector2.Lerp(transform.position, target, t / time);
             line.SetPosition(0, transform.position + offset);
             line.SetPosition(1, newPos);
             yield return null;
+            t += grappleShootSpeed * Time.deltaTime;
         }
         
         line.SetPosition(1, target);
