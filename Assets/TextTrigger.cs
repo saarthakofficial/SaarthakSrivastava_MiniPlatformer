@@ -38,6 +38,7 @@ public class TextTrigger : MonoBehaviour
                 PlayerPrefs.SetFloat("StartTimer", GameManager.instance.timerUI.timer);
             }
             else if (textType == TextType.END){
+                PlayerPrefs.DeleteAll();
                 GameManager.instance.transition.Play("End");
                 GameManager.instance.timerUI.SetBestTime();
                 SceneManager.LoadScene(0);

@@ -17,7 +17,7 @@ public class FollowCam : MonoBehaviour
     void Update()
     {
         if (playerTransform != null){
-            if (GameManager.instance.currentState == State.DashArea || GameManager.instance.currentState == State.WaitArea){
+            if (GameManager.instance.currentState == State.DashArea){
                 Vector3 targetPosition = new Vector3(playerTransform.position.x, playerTransform.position.y + yOffset, transform.position.z);
                 Vector3 smoothedPosition = Vector3.Lerp(transform.position, targetPosition, smoothSpeed * Time.deltaTime);
                 transform.position = smoothedPosition;

@@ -112,7 +112,7 @@ public class PlayerController : MonoBehaviour
 
     void HandleDash(){
         _dashCooldownTimer -= Time.deltaTime;
-        if (Input.GetAxis("Fire3") > 0 && !_dashing && _dashCooldownTimer<0 && (Input.GetAxis("Horizontal") > 0 || Input.GetAxis("Vertical") > 0)){
+        if (Input.GetAxis("Fire3") > 0 && !_dashing && _dashCooldownTimer<0 && (Input.GetAxis("Horizontal") != 0)){
             _dashing = true;
             _dashCooldownTimer = _stats.DashCooldown;
             playerAnimator.dashVfx.Play();
@@ -121,7 +121,7 @@ public class PlayerController : MonoBehaviour
     }
 
     IEnumerator Dash(){
-        Vector2 dashDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
+        Vector2 dashDirection = new Vector2(Input.GetAxis("Horizontal"), 0).normalized;
         Vector2 targetVelocity = dashDirection *_stats.DashSpeed;
         float elapsedTime = 0;
         while (elapsedTime < _stats.DashDuration){
