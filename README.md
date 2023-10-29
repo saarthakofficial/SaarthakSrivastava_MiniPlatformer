@@ -11,6 +11,8 @@ This repository contains a 2D platformer game where a cube must reach the top wh
 
 ## Gameplay
 
+[Gameplay Video](https://drive.google.com/file/d/1TIu6icGG-APf3M5jz-9NHOXDI-QD_S31/view?usp=sharing)
+
 Your objective is to guide the cube to the top of the level while avoiding the approaching lava. Here's how you can control the cube:
 
 ### Movement
