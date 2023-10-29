@@ -31,13 +31,14 @@ public class TextTrigger : MonoBehaviour
             Destroy(this.gameObject, 1f);  
             if (textType == TextType.START){
                 GameManager.instance.currentState = State.PlayArea;
+                GameManager.instance.timerUI.enabled = true;
             }
             else if (textType == TextType.CHECKPOINT){
                 PlayerPrefs.SetFloat("spawnX", other.transform.position.x);
                 PlayerPrefs.SetFloat("spawnY", other.transform.position.y);
                 PlayerPrefs.SetFloat("StartTimer", GameManager.instance.timerUI.timer);
                 GameManager.instance.currentState = State.PlayArea;
-
+                GameManager.instance.timerUI.enabled = true;
             }
             else if (textType == TextType.END){
                 PlayerPrefs.DeleteKey("spawnX");
@@ -48,6 +49,7 @@ public class TextTrigger : MonoBehaviour
                 GameManager.instance.transition.Play("End");
                 // GameManager.instance.LoadNext();
                 GameManager.instance.LevelFinish();
+
             }
         }
     }

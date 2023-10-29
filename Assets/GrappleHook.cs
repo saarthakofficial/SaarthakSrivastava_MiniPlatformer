@@ -15,24 +15,26 @@ public class GrappleHook : MonoBehaviour {
 
     Vector2 target;
 
+    public AudioClip grappleSfx;
 
-    private void Start() {
+
+    private void Start(){
         line = GetComponent<LineRenderer>();
     }
 
-    private void Update() {
+    private void Update(){
         if (Input.GetMouseButtonDown(0) && !isGrappling && GetComponent<PlayerController>()._jumping) {
             StartGrapple();
         }
 
-        if (retracting) {
+        if (retracting){
             Vector2 grapplePos = Vector2.Lerp(transform.position, target, grappleSpeed * Time.deltaTime);
 
             transform.position = grapplePos;
 
             line.SetPosition(0, transform.position + offset);
 
-            if (Vector2.Distance(transform.position, target) < 0.5f) {
+            if (Vector2.Distance(transform.position, target) < 1f){
                 retracting = false;
                 isGrappling = false;
                 line.enabled = false;
@@ -40,12 +42,13 @@ public class GrappleHook : MonoBehaviour {
         }
     }
 
-    private void StartGrapple() {
+    private void StartGrapple(){
         Vector2 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - (transform.position + offset);
 
         RaycastHit2D hit = Physics2D.Raycast(transform.position + offset, direction, maxDistance, grapplableMask);
 
-        if (hit.collider != null) {
+        if (hit.collider != null){
+            AudioManager.instance.sfx.PlayOneShot(grappleSfx);
             isGrappling = true;
             target = hit.point;
             line.enabled = true;
@@ -55,7 +58,7 @@ public class GrappleHook : MonoBehaviour {
         }
     }
 
-    IEnumerator Grapple() {
+    IEnumerator Grapple(){
         float t = 0;
         float time = 10;
 
@@ -64,7 +67,7 @@ public class GrappleHook : MonoBehaviour {
 
         Vector2 newPos;
 
-        while (t < time) {
+        while (t < time){
             newPos = Vector2.Lerp(transform.position, target, t / time);
             line.SetPosition(0, transform.position + offset);
             line.SetPosition(1, newPos);
@@ -74,5 +77,13 @@ public class GrappleHook : MonoBehaviour {
         
         line.SetPosition(1, target);
         retracting = true;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision) {
+        if (isGrappling){
+            isGrappling = false;
+            line.enabled = false;
+            retracting = false;
+        }
     }
 }

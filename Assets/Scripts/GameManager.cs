@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
    
     void Start()
     {
+        timerUI.enabled = false;
         if (currentLevel == 1){
             spawnPoint = new Vector2(PlayerPrefs.GetFloat("spawnX", -30), PlayerPrefs.GetFloat("spawnY", -3));
         }
@@ -38,7 +39,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void GameOver(){

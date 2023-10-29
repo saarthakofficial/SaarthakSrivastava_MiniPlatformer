@@ -115,7 +115,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetAxis("Fire3") > 0 && !_dashing && _dashCooldownTimer<0 && (Input.GetAxis("Horizontal") != 0)){
             _dashing = true;
             _dashCooldownTimer = _stats.DashCooldown;
-            playerAnimator.dashVfx.Play();
+            playerAnimator.Dash(); 
             StartCoroutine("Dash");
         }
     }

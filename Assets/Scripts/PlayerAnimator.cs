@@ -12,6 +12,10 @@ public class PlayerAnimator : MonoBehaviour
     public ParticleSystem dashVfx;
     
     public GameObject boomVFX;
+
+    public AudioClip landSfx;
+    public AudioClip jumpSfx;
+    public AudioClip dashSfx;
     PlayerController player;
     
     void Awake(){
@@ -31,9 +35,19 @@ public class PlayerAnimator : MonoBehaviour
 
     public void Jump(){
         anim.SetTrigger("Jump");
+        AudioManager.instance.sfx.PlayOneShot(jumpSfx);
     }
 
     public void Land(){
         anim.SetTrigger("Land");
+        AudioManager.instance.sfx.PlayOneShot(landSfx);
+
     }
+
+    public void Dash(){
+        dashVfx.Play();
+        AudioManager.instance.sfx.PlayOneShot(dashSfx);
+    }
+
+    
 }

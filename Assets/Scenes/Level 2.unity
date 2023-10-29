@@ -2424,8 +2424,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 313250687}
   m_LocalRotation: {x: -0.70710677, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 3, y: 106.493416, z: 0.01}
-  m_LocalScale: {x: 0.22123356, y: 0.37466455, z: 0.29504082}
+  m_LocalPosition: {x: 3, y: 106.8102, z: 0.01}
+  m_LocalScale: {x: 0.22123356, y: 0.37466455, z: 0.23169556}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1437575753}
@@ -7195,8 +7195,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1251522443}
   m_LocalRotation: {x: -0.70710677, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 3, y: 106.493416, z: 0.01}
-  m_LocalScale: {x: 0.22123356, y: 0.37466455, z: 0.29504082}
+  m_LocalPosition: {x: 3, y: 106.8422, z: 0.01}
+  m_LocalScale: {x: 0.22123356, y: 0.37466455, z: 0.22526366}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1856037370}
@@ -13358,6 +13358,7 @@ MonoBehaviour:
   grappleShootSpeed: 40
   offset: {x: 0, y: 0.5, z: 0}
   retracting: 0
+  grappleSfx: {fileID: 8300000, guid: 93d7f003df87d6e4c8e919b8f7a72eec, type: 3}
 --- !u!4 &2969068311858215065
 Transform:
   m_ObjectHideFlags: 0
@@ -13662,3 +13663,6 @@ MonoBehaviour:
   landVfx: {fileID: 232183682}
   dashVfx: {fileID: 1994434159}
   boomVFX: {fileID: 2556035074368993446, guid: e308db566ef50824ea9bd3048ec718a3, type: 3}
+  landSfx: {fileID: 8300000, guid: 5ee1eb3654a54e84aa92275da28bd8f0, type: 3}
+  jumpSfx: {fileID: 8300000, guid: 365e6f45b5c814a448c80df586079d15, type: 3}
+  dashSfx: {fileID: 8300000, guid: 1080c606242c9a540b043d4cd7a55de7, type: 3}
