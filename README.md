@@ -1,6 +1,6 @@
 # AutoVRSE Take Home Test Submission
 
-Welcome to my AutoVRSE Take Home Test submission. This repository contains a 2D platformer game where a cube must reach the top while escaping from rising lava. The cube has several actions it can perform, including moving, dashing, jumping, double jumping, and grappling.
+This repository contains a 2D platformer game where a cube must reach the top while escaping from rising lava. The cube has several actions it can perform, including moving, dashing, jumping, double jumping, and grappling.
 
 ## Controls
 
