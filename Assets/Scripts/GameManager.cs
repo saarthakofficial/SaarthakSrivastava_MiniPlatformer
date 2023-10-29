@@ -42,12 +42,20 @@ public class GameManager : MonoBehaviour
     }
 
     public void GameOver(){
-        Destroy(playerObj, 0.15f);
+        Destroy(playerObj);
         transition.Play("End");
         Invoke("RestartGame", 1f);
     }
 
+    public void LevelFinish(){
+        transition.Play("End");
+        Invoke("LoadNext", 1f);
+    }
+
+    public void LoadNext(){
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
+    }
     public void RestartGame(){
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

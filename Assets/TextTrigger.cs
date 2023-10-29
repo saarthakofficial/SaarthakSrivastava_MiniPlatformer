@@ -38,10 +38,14 @@ public class TextTrigger : MonoBehaviour
                 PlayerPrefs.SetFloat("StartTimer", GameManager.instance.timerUI.timer);
             }
             else if (textType == TextType.END){
-                PlayerPrefs.DeleteAll();
-                GameManager.instance.transition.Play("End");
+                PlayerPrefs.DeleteKey("spawnX");
+                PlayerPrefs.DeleteKey("spawnY");
+                PlayerPrefs.DeleteKey("StartTimer");
                 GameManager.instance.timerUI.SetBestTime();
-                SceneManager.LoadScene(0);
+                PlayerPrefs.SetFloat("Best"+GameManager.instance.currentLevel, GameManager.instance.timerUI.bestTime);
+                GameManager.instance.transition.Play("End");
+                // GameManager.instance.LoadNext();
+                GameManager.instance.LevelFinish();
             }
         }
     }

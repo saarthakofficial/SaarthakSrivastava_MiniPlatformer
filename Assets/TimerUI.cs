@@ -9,10 +9,12 @@ public class TimerUI : MonoBehaviour
     public float timer;
     public float bestTime = 0;
 
-    void Start(){
+    void Start()
+    {
         timer = PlayerPrefs.GetFloat("StartTimer", 0);
-        bestTime = PlayerPrefs.GetFloat("BestTime", 0);
+        bestTime = PlayerPrefs.GetFloat("Best" + GameManager.instance.currentLevel, 0);
     }
+
     void Update()
     {
         timer += Time.deltaTime;
@@ -23,13 +25,16 @@ public class TimerUI : MonoBehaviour
     {
         int minutes = Mathf.FloorToInt(timer / 60);
         int seconds = Mathf.FloorToInt(timer % 60);
-        Debug.Log(timer + " " + minutes + " " + seconds);
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
-        bestTimeText.text = string.Format("Best: {0:00}:{1:00}", bestTime / 60, bestTime % 60);
+
+        int bestMinutes = Mathf.FloorToInt(bestTime / 60);
+        int bestSeconds = Mathf.FloorToInt(bestTime % 60);
+        bestTimeText.text = string.Format("Best: {0:00}:{1:00}", bestMinutes, bestSeconds);
     }
 
-    public void SetBestTime(){
-        PlayerPrefs.SetFloat("BestTime", timer);
+    public void SetBestTime()
+    {
         bestTime = timer;
+        PlayerPrefs.SetFloat("Best" + GameManager.instance.currentLevel, bestTime);
     }
 }
