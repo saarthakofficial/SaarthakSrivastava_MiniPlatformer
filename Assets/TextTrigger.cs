@@ -45,8 +45,6 @@ public class TextTrigger : MonoBehaviour
                 PlayerPrefs.DeleteKey("spawnY");
                 PlayerPrefs.DeleteKey("StartTimer");
                 GameManager.instance.timerUI.SetBestTime();
-                PlayerPrefs.SetFloat("Best"+GameManager.instance.currentLevel, GameManager.instance.timerUI.bestTime);
-                GameManager.instance.transition.Play("End");
                 // GameManager.instance.LoadNext();
                 GameManager.instance.LevelFinish();
 

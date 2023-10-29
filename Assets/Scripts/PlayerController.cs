@@ -32,7 +32,6 @@ public class PlayerController : MonoBehaviour
                 HandleJump();
             }
             HandleDash();
-
     }
 
     void CheckGrounded(){

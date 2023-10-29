@@ -774,6 +774,7 @@ MonoBehaviour:
   currentState: 0
   transition: {fileID: 18472789}
   timerUI: {fileID: 63340609}
+  _stats: {fileID: 0}
 --- !u!4 &108277141
 Transform:
   m_ObjectHideFlags: 0
@@ -4050,7 +4051,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 615441854}
   m_LocalRotation: {x: -0, y: -0, z: 0.6087605, w: 0.79335415}
-  m_LocalPosition: {x: 3.65, y: 34.73, z: 0}
+  m_LocalPosition: {x: 3.65, y: 34.48, z: 0}
   m_LocalScale: {x: 7.5, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4072,7 +4073,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0.51, y: 0}
-  m_ConnectedAnchor: {x: 0.20499903, y: -0.38355765}
+  m_ConnectedAnchor: {x: 0.20499903, y: -0.5502243}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -4096,7 +4097,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: -0.49, y: 0}
-  m_ConnectedAnchor: {x: 0.2747078, y: 0.6936315}
+  m_ConnectedAnchor: {x: 0.2747078, y: 0.36029816}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0

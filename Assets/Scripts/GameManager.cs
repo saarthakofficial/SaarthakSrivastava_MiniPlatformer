@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public State currentState;
     public Animation transition;
     public TimerUI timerUI;
+    public ScriptableStats _stats;
     void Awake(){
         instance = this;
     }

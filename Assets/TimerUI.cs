@@ -34,7 +34,7 @@ public class TimerUI : MonoBehaviour
 
     public void SetBestTime()
     {
-        if (timer < PlayerPrefs.GetFloat("Best" + GameManager.instance.currentLevel, 0)){
+        if ((PlayerPrefs.GetFloat("Best" + GameManager.instance.currentLevel, 0) == 0) || timer < PlayerPrefs.GetFloat("Best" + GameManager.instance.currentLevel, 0)){
             bestTime = timer;
             PlayerPrefs.SetFloat("Best" + GameManager.instance.currentLevel, bestTime);
         }
