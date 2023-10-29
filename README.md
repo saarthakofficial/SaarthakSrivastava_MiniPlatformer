@@ -27,14 +27,15 @@ Press the 'Space' key to make the cube jump. If the cube is already in the air, 
 
 ### Grappling
 
-Click your mouse to use the grapple. The grapple allows you to swing and reach challenging areas.
+Click your mouse towards any surface to use the grapple. The grapple allows you to retract yourself to that point on the surface.
 
 ## Installation and Play
 
-1. Clone this repository to your local machine:
-``git clone https://github.com/saarthakofficial/SaarthakSrivastava_MiniPlatformer``
+1. To play the game, download the game build from the [Releases section](https://github.com/saarthakofficial/SaarthakSrivastava_MiniPlatformer/releases) of this repository.
 
-2. Navigate to the game folder and open the 'SaarthakSrivastava_MiniPlatformer.exe' file to start playing.
+2. Once the download is complete, unzip the file to your desired location.
+
+3. Inside the unzipped folder, find and open the 'SaarthakSrivastava_MiniPlatformer.exe' file to start playing.
 
 ## Credits
 
