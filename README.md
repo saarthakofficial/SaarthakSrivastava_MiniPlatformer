@@ -6,8 +6,8 @@ This repository contains a 2D platformer game where a cube must reach the top wh
 
 - **A, D**: Move the cube left and right.
 - **Left Shift**: Dash for a burst of speed.
-- **Space**: Jump and double jump (when in the air).
-- **Mouse Click**: Use the grapple to navigate the game world.
+- **Space**: Jump and Double jump (in air).
+- **Mouse Click**: Grapple to any surface.
 
 ## Gameplay
 
@@ -38,8 +38,8 @@ Click your mouse to use the grapple. The grapple allows you to swing and reach c
 
 ## Credits
 
-This project was created as part of the AutoVRSE Take Home Test by [Your Name].
+This project was created as part of the AutoVRSE Take Home Test by Saarthak Srivastava.
 
 ## Feedback and Contributions
 
-We welcome your feedback! If you have suggestions, encounter issues, or want to contribute, please feel free to [open an issue](https://github.com/your-username/autovrse-takehome/issues) or submit a pull request.
+We welcome your feedback! If you have suggestions, encounter issues, or want to contribute, please feel free to [open an issue](https://github.com/saarthakofficial/SaarthakSrivastava_MiniPlatformer/issues) or submit a pull request.
