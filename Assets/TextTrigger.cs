@@ -36,6 +36,8 @@ public class TextTrigger : MonoBehaviour
                 PlayerPrefs.SetFloat("spawnX", other.transform.position.x);
                 PlayerPrefs.SetFloat("spawnY", other.transform.position.y);
                 PlayerPrefs.SetFloat("StartTimer", GameManager.instance.timerUI.timer);
+                GameManager.instance.currentState = State.PlayArea;
+
             }
             else if (textType == TextType.END){
                 PlayerPrefs.DeleteKey("spawnX");
